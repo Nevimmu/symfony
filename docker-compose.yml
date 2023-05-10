@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: mysql:8.0
+    container_name: db_docker_symfony
+    restart: always
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_USER: book
+      MYSQL_PASSWORD: bookpw1234
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: symfony
+    networks:
+      - dev
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin_docker_symfony
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 8080:80
+    environment:
+      PWM_HOST: db
+    networks:
+      - dev
+
+  symfony:
+    build: src
+    container_name: symfony_docker_symfony
+    ports:
+      - 8741:80
+    volumes:
+      - ./src/vhosts:/etc/apache2/sites-enabled
+      - ./:/var/www
+    restart: always
+    networks:
+      - dev
+
+  
+networks:
+  dev:
+
+volumes:
+  db-data:
