@@ -14,66 +14,96 @@ class Book
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Name = null;
+    private ?string $Titre = null;
 
     #[ORM\Column]
-    private ?float $Price = null;
+    private ?float $Prix = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Title = null;
+    #[ORM\Column]
+    private ?bool $Lu = False;
 
-    #[ORM\ManyToOne(inversedBy: 'books')]
-    private ?Author $Author = null;
+    #[ORM\Column]
+    private ?bool $Reading = False;
+
+    #[ORM\Column]
+    private ?int $total_time = 0;
+
+    #[ORM\Column]
+    private ?int $start_time = 0;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitre(): ?string
     {
-        return $this->Name;
+        return $this->Titre;
     }
 
-    public function setName(string $Name): self
+    public function setTitre(string $Titre): self
     {
-        $this->Name = $Name;
+        $this->Titre = $Titre;
 
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrix(): ?float
     {
-        return $this->Price;
+        return $this->Prix;
     }
 
-    public function setPrice(float $Price): self
+    public function setPrix(float $Prix): self
     {
-        $this->Price = $Price;
+        $this->Prix = $Prix;
 
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function isLu(): ?bool
     {
-        return $this->Title;
+        return $this->Lu;
     }
 
-    public function setTitle(string $Title): self
+    public function setLu(bool $Lu): self
     {
-        $this->Title = $Title;
+        $this->Lu = $Lu;
 
         return $this;
     }
 
-    public function getAuthor(): ?Author
+    public function isReading(): ?bool
     {
-        return $this->Author;
+        return $this->Reading;
     }
 
-    public function setAuthor(?Author $Author): self
+    public function setReading(bool $Reading): self
     {
-        $this->Author = $Author;
+        $this->Reading = $Reading;
+
+        return $this;
+    }
+
+    public function getTotalTime(): ?int
+    {
+        return $this->total_time;
+    }
+
+    public function setTotalTime(int $total_time): self
+    {
+        $this->total_time = $total_time;
+
+        return $this;
+    }
+
+    public function getStartTime(): ?int
+    {
+        return $this->start_time;
+    }
+
+    public function setStartTime(int $start_time): self
+    {
+        $this->start_time = $start_time;
 
         return $this;
     }

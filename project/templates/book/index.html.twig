@@ -4,18 +4,57 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+	.example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+	.example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    <h2>Ahoy</h2>
+	<h1>Livres</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/project/src/Controller/BookController.php'|file_link(0) }}">src/Controller/BookController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/project/templates/book/index.html.twig'|file_link(0) }}">templates/book/index.html.twig</a></code></li>
-    </ul>
+	<h3>Ajoute un livre</h3>
+	<!-- <form action="">
+		<label for="nom">Nom du livre</label>
+		<input type="text" id="nom"></br>
+		<label for="prix">Prix</label>
+		<input type="text" id="prix"></br>
+		<button type="submit">Ajouter</button>
+	</form> -->
+	{{ form(form) }}
+
+	<h3>Liste des livres</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Titre</th>
+			<th>Prix</th>
+			<th>Lu</th>
+			<th>Reading</th>
+			<th>Temps passé</th>
+		</tr>
+		{% for book in books %}
+		<tr>
+			<td>{{ book.id }}</td>
+			<td>{{ book.titre }}</td>
+			<td>{{ book.prix }}€</td>
+
+			{% if book.lu == 1 %}
+			<td><a href="/book/{{ book.id }}/lu">Oui</a></td>
+			{% else %}
+			<td><a href="/book/{{ book.id }}/lu">Non</a></td>
+			{% endif %}
+
+			{% if book.reading == 1 %}
+			<td><a href="/book/{{ book.id }}/reading">Oui</a></td>
+			{% else %}
+			<td><a href="/book/{{ book.id }}/reading">Non</a></td>
+			{% endif %}
+
+			<td>{{ book.totalTime|date('H:i:s') }}</td>
+			<td><a href="/book/{{ book.id }}/delete">x</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+	<a href="/book/reading/stopall"><button>Stop all</button></a>
+
 </div>
 {% endblock %}

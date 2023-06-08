@@ -14,6 +14,16 @@
         {% endblock %}
     </head>
     <body>
+        {% if is_granted('IS_AUTHENTICATED') %}
+        <div class="login-bar">
+            <p>Login as : {{ app.user.username }}</p>
+            <a href="/logout">Logout</a>
+            {% else %}
+            <a href="/login">Login</a>
+            /
+            <a href="/register">Register</a>
+        </div>
+        {% endif %}
         {% block body %}{% endblock %}
     </body>
 </html>
