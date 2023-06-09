@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\AddBookType;
+use App\Form\AddAuthorType;
 use App\Repository\AuthorRepository;
 use App\Entity\Author;
 use App\Entity\Book;
@@ -12,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Length;
 
 class BookController extends AbstractController
 {
@@ -31,13 +33,30 @@ class BookController extends AbstractController
 
 			return $this->redirectToRoute('app_book');
 		}
+		
+		$form_author = $this->createForm(AddAuthorType::class);
+
+		$form_author->handleRequest($request);
+		if ($form_author->isSubmitted() && $form_author->isValid()) {
+			$author = $form_author->getData();
+			$entityManager->persist($author);
+			$entityManager->flush();
+
+			return $this->redirectToRoute('app_book');
+		}
+
+
+		$authors = $authorRepository->findAll();
+		$books = $bookRepository->findAll();
+
 
 
 		return $this->render('book/index.html.twig', [
 			'controller_name' => 'BookController',
-			'books' => $bookRepository->findAll(),
-			'authors' => $authorRepository->findAll(),
+			'books' => $books,
+			'authors' => $authors,
 			'form' => $form,
+			'form_author' => $form_author,
 		]);
 	}
 

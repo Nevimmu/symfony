@@ -15,6 +15,11 @@ class AddBookType extends AbstractType
         $builder
             ->add('Titre')
             ->add('Prix')
+            // ->add('Lu')
+            // ->add('Reading')
+            // ->add('total_time')
+            // ->add('start_time')
+            ->add('author')
             ->add('Ajouter', SubmitType::class)
         ;
     }

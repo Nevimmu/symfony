@@ -6,7 +6,6 @@ use App\Entity\Book;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
@@ -26,8 +25,8 @@ class BookCrudController extends AbstractCrudController
             TextField::new('titre'),
             MoneyField::new('prix')->setCurrency('EUR'),
             BooleanField::new('lu'),
-            BooleanField::new('reading'),
-            IntegerField::new('total_time'),
+            // IntegerField::new('total_time'),
+            // BooleanField::new('reading'),
             IntegerField::new('start_time'),
             AssociationField::new('author')->renderAsNativeWidget(),
         ];

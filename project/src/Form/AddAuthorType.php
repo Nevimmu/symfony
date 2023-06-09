@@ -6,6 +6,7 @@ use App\Entity\Author;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AddAuthorType extends AbstractType
 {
@@ -13,6 +14,7 @@ class AddAuthorType extends AbstractType
     {
         $builder
             ->add('Name')
+            ->add('Ajouter', SubmitType::class)
         ;
     }
 
