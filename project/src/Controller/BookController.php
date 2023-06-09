@@ -3,23 +3,23 @@
 namespace App\Controller;
 
 use App\Form\AddBookType;
+use App\Repository\AuthorRepository;
+use App\Entity\Author;
+use App\Entity\Book;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Time;
 
 class BookController extends AbstractController
 {
 	#[Route('/book', name: 'app_book')]
-	public function index(BookRepository $bookRepository, Request $request, EntityManagerInterface $entityManager): Response
+	public function index(BookRepository $bookRepository, AuthorRepository $authorRepository, Request $request, EntityManagerInterface $entityManager): Response
 	{
 
 		$this->denyAccessUnlessGranted('ROLE_USER');
-
-		$books = $bookRepository->findAll();
 
 		$form = $this->createForm(AddBookType::class);
 
@@ -35,7 +35,8 @@ class BookController extends AbstractController
 
 		return $this->render('book/index.html.twig', [
 			'controller_name' => 'BookController',
-			'books' => $books,
+			'books' => $bookRepository->findAll(),
+			'authors' => $authorRepository->findAll(),
 			'form' => $form,
 		]);
 	}

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
@@ -30,6 +31,21 @@ class Book
 
     #[ORM\Column]
     private ?int $start_time = 0;
+
+    #[ORM\ManyToOne(inversedBy: 'books')]
+    private ?Author $author = null;
+
+    public function __construct()
+    {
+        $this->author = new Author();
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +120,18 @@ class Book
     public function setStartTime(int $start_time): self
     {
         $this->start_time = $start_time;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

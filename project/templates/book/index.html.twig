@@ -12,13 +12,6 @@
 	<h1>Livres</h1>
 
 	<h3>Ajoute un livre</h3>
-	<!-- <form action="">
-		<label for="nom">Nom du livre</label>
-		<input type="text" id="nom"></br>
-		<label for="prix">Prix</label>
-		<input type="text" id="prix"></br>
-		<button type="submit">Ajouter</button>
-	</form> -->
 	{{ form(form) }}
 
 	<h3>Liste des livres</h3>
@@ -50,11 +43,53 @@
 			{% endif %}
 
 			<td>{{ book.totalTime|date('H:i:s') }}</td>
+			<td>{{ book.author }}</td>
 			<td><a href="/book/{{ book.id }}/delete">x</a></td>
 		</tr>
 		{% endfor %}
 	</table>
 	<a href="/book/reading/stopall"><button>Stop all</button></a>
+
+	{% for author in authors %}
+	<hr>
+	<h3>{{ author.name }}</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Titre</th>
+			<th>Prix</th>
+			<th>Lu</th>
+			<th>Reading</th>
+			<th>Temps passé</th>
+			<th>Auteur</th>
+		</tr>
+
+		{% for book in books %}
+			{% if author.name == book.author %}
+				<tr>
+					<td>{{ book.id }}</td>
+					<td>{{ book.titre }}</td>
+					<td>{{ book.prix }}€</td>
+
+					{% if book.lu == 1 %}
+					<td><a href="/book/{{ book.id }}/lu">Oui</a></td>
+					{% else %}
+					<td><a href="/book/{{ book.id }}/lu">Non</a></td>
+					{% endif %}
+
+					{% if book.reading == 1 %}
+					<td><a href="/book/{{ book.id }}/reading">Oui</a></td>
+					{% else %}
+					<td><a href="/book/{{ book.id }}/reading">Non</a></td>
+					{% endif %}
+
+					<td>{{ book.totalTime|date('H:i:s') }}</td>
+					<td><a href="/book/{{ book.id }}/delete">x</a></td>
+				</tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+	{% endfor %}
 
 </div>
 {% endblock %}
